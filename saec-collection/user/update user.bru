@@ -1,0 +1,22 @@
+meta {
+  name: update user
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{baseURL}}/user/:id
+  body: json
+  auth: none
+}
+
+params:path {
+  id: 1
+}
+
+body:json {
+  {
+    "first_name": "test1",
+    "last_name": "test1"
+  }
+}

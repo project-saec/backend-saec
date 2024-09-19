@@ -4,8 +4,8 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import configuration from 'config/configuration';
 import { validateEnv } from 'scripts/env.validation';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { typeOrmAsyncConfig } from 'db/data-source';
+import { PrismaModule } from './prisma/prisma.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -15,7 +15,8 @@ import { typeOrmAsyncConfig } from 'db/data-source';
       load: [configuration],
       validate: validateEnv,
     }),
-    TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
+    PrismaModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,5 +1,5 @@
 import { plainToInstance } from 'class-transformer';
-import { IsBoolean, IsNumber, IsString, validateSync } from 'class-validator';
+import { IsNumber, IsString, validateSync } from 'class-validator';
 
 class EnvironmentVariables {
   @IsNumber()
@@ -8,19 +8,8 @@ class EnvironmentVariables {
   @IsString()
   APP_JWT_SECRET: string;
 
-  @IsNumber()
-  DB_PORT: number;
   @IsString()
-  DB_HOST: string;
-  @IsString()
-  DB_USERNAME: string;
-  @IsString()
-  DB_PASSWORD: string;
-  @IsString()
-  DB_DATABASE: string;
-
-  @IsBoolean()
-  DB_SYNC: boolean;
+  DATABASE_URL: string;
 }
 
 export function validateEnv(config: Record<string, unknown>) {
