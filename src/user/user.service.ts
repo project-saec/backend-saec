@@ -65,4 +65,46 @@ export class UserService {
       where: { id },
     });
   }
+
+  async enable2FA(id, secret: string) {
+    const user = await this.findById(id);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    if (user.enable2FA === true) {
+      throw new ConflictException('2FA already enabled');
+    }
+    return await this.prismaService.user.update({
+      where: { id },
+      data: {
+        twoFASecret: secret,
+        enable2FA: true,
+      },
+    });
+  }
+
+  async disable2FA(id) {
+    const user = await this.findById(id);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    if (user.enable2FA === false) {
+      throw new ConflictException('2FA already disable');
+    }
+    return await this.prismaService.user.update({
+      where: { id },
+      data: { enable2FA: false, twoFASecret: null },
+    });
+  }
+
+  async updateRefreshToken(id: number, refreshToken: string | null) {
+    const user = await this.findById(id);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    return await this.prismaService.user.update({
+      where: { id },
+      data: { refreshToken },
+    });
+  }
 }

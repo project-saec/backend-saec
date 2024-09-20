@@ -1,0 +1,22 @@
+meta {
+  name: logout
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseURL}}/auth/logout
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidGVzdDNAdGVzdC5jb20iLCJpYXQiOjE3MjY4MjY3OTQsImV4cCI6MTcyNzQzMTU5NH0.Crt4vLbE0tlMduC2oWFxcQjlAI9wkElP-fP5h9vJFCw
+}
+
+body:json {
+  {
+    "email": "test2@test.com",
+    "password": "1234"
+  }
+}

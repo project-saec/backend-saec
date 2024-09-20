@@ -1,0 +1,15 @@
+meta {
+  name: disable2fa
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseURL}}/auth/disable-2fa
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidGVzdDJAdGVzdC5jb20iLCJpYXQiOjE3MjY4MjkzMjAsImV4cCI6MTcyNzQzNDEyMH0.eLrcgTCzMjbpgE8MsSLmLw90B3hWMzWZq1rRPqoSZmI
+}

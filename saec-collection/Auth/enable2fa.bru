@@ -1,0 +1,15 @@
+meta {
+  name: enable2fa
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseURL}}/auth/enable-2fa
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoidGVzdDNAdGVzdC5jb20iLCJpYXQiOjE3MjY4MjY3OTQsImV4cCI6MTcyNjgyNzY5NH0.PWTkocKZsiZ5jneEwvVueENha88FhVY7nJfhibYii4A
+}

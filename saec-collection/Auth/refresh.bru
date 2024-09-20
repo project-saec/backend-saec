@@ -1,0 +1,19 @@
+meta {
+  name: refresh
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseURL}}/auth/refresh
+  body: none
+  auth: bearer
+}
+
+headers {
+  : 
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidGVzdDJAdGVzdC5jb20iLCJpYXQiOjE3MjY4MjkzMjAsImV4cCI6MTcyNzQzNDEyMH0.eLrcgTCzMjbpgE8MsSLmLw90B3hWMzWZq1rRPqoSZmI
+}

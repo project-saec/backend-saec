@@ -6,7 +6,19 @@ class EnvironmentVariables {
   APPLICATION_PORT: number;
 
   @IsString()
-  APP_JWT_SECRET: string;
+  APP_JWT_ACCESS_SECRET: string;
+
+  @IsString()
+  APP_JWT_ACCESS_EXPIRE_TIME: string;
+
+  @IsString()
+  APP_JWT_REFRESH_SECRET: string;
+
+  @IsString()
+  APP_JWT_REFRESH_EXPIRE_TIME: string;
+
+  @IsString()
+  APP_2FA_Token_EXPIRE_TIME: string;
 
   @IsString()
   DATABASE_URL: string;
