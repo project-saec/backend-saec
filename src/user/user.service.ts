@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Prisma } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 
 @Injectable()
 export class UserService {
@@ -106,5 +106,41 @@ export class UserService {
       where: { id },
       data: { refreshToken },
     });
+  }
+
+  async updatePassword(id: number, newPassword: string): Promise<User> {
+    const user = await this.prismaService.user.findUnique({
+      where: { id },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const updatedUser = await this.prismaService.user.update({
+      where: { id },
+      data: { password: newPassword },
+    });
+
+    return updatedUser;
+  }
+
+  async verifyEmail(id: number): Promise<User> {
+    const user = await this.prismaService.user.findUnique({
+      where: { id },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const verifiedUser = await this.prismaService.user.update({
+      where: { id },
+      data: {
+        emailVerified: true,
+      },
+    });
+
+    return verifiedUser;
   }
 }

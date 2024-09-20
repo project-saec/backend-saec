@@ -1,0 +1,18 @@
+meta {
+  name: verify 2fa
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{baseURL}}/auth/verify-2fa
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "token": "766628",
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QzQHRlc3QuY29tIiwic3ViIjozLCJpYXQiOjE3MjY4MzIzMzMsImV4cCI6MTcyNjgzMjQ1M30.ItNr7IZChAze8O6pJH7NC3SEzu7aZuPWf948mvmnWQ4"
+  }
+}

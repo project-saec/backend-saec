@@ -17,6 +17,7 @@ model User {
   twoFASecret String?
   enable2FA Boolean @default(false)
   refreshToken String?
+  emailVerified Boolean @default(false)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }

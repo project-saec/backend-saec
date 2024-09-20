@@ -1,0 +1,21 @@
+meta {
+  name: Send Verfication Email
+  type: http
+  seq: 11
+}
+
+post {
+  url: {{baseURL}}/auth/send-verification-email
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidGVzdDJAdGVzdC5jb20iLCJpYXQiOjE3MjY4Mzk5MjMsImV4cCI6MTcyNjg0MDgyM30.djEuSdCNkdwIBLnHFm2Ye1GYA5hCMP_o7pB0v2NtLYw
+}
+
+body:json {
+  {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoidGVzdDJAdGVzdC5jb20iLCJpYXQiOjE3MjY4Mzg0MjIsImV4cCI6MTcyNjgzOTMyMn0.s-7PCRzN2NnFzqorWYZ1ZuLZe59-7y3WRh4SaJqH1os"
+  }
+}

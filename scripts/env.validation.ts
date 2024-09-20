@@ -18,10 +18,40 @@ class EnvironmentVariables {
   APP_JWT_REFRESH_EXPIRE_TIME: string;
 
   @IsString()
+  APP_JWT_2FA_SECRET: string;
+
+  @IsString()
   APP_2FA_Token_EXPIRE_TIME: string;
 
   @IsString()
+  APP_JWT_EMAIL_VERIFY_SECRET: string;
+
+  @IsString()
+  APP_JWT_EMAIL_VERIFY_EXPIRE_TIME: string;
+
+  @IsString()
+  APP_JWT_RESET_SECRET: string;
+
+  @IsString()
+  APP_JWT_RESET_EXPIRE_TIME: string;
+
+  @IsString()
   DATABASE_URL: string;
+
+  @IsString()
+  MAIL_HOST: string;
+
+  @IsNumber()
+  MAIL_PORT: number;
+
+  @IsString()
+  MAIL_USER: string;
+
+  @IsString()
+  MAIL_PASSWORD: string;
+
+  @IsString()
+  FRONT_URL: string;
 }
 
 export function validateEnv(config: Record<string, unknown>) {
