@@ -7,17 +7,165 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id Int @id @default(autoincrement())
-  email String @unique
-  password String? 
-  first_name String?
-  last_name String?
-  twoFASecret String?
-  enable2FA Boolean @default(false)
-  refreshToken String?
-  emailVerified Boolean @default(false)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id            Int      @id @default(autoincrement())
+  email         String   @unique
+  password      String?
+  first_name    String?
+  last_name     String?
+  twoFASecret   String?
+  enable2FA     Boolean  @default(false)
+  refreshToken  String?
+  emailVerified Boolean  @default(false)
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  orders        Order[]
+
+  @@map("users")
+}
+
+model Category {
+  id                Int             @id @default(autoincrement())
+  title             String          @unique
+  description       String
+  SubCategories     SubCategory[]
+  products          Product[]
+  allowedAttributes AttributeType[]
+  created_at        DateTime        @default(now())
+  updated_at        DateTime        @updatedAt
+
+  @@index([title])
+  @@map("categories")
+}
+
+model SubCategory {
+  id                Int             @id @default(autoincrement())
+  title             String          @unique
+  description       String
+  categoryId        Int
+  category          Category        @relation(fields: [categoryId], references: [id])
+  products          Product[]
+  allowedAttributes AttributeType[]
+  created_at        DateTime        @default(now())
+  updated_at        DateTime        @updatedAt
+
+  @@index([title])
+  @@map("sub_categories")
+}
+
+model Product {
+  id            Int              @id @default(autoincrement())
+  name          String
+  description   String?
+  base_price    Decimal          @db.Decimal(10, 2)
+  categoryId    Int
+  category      Category         @relation(fields: [categoryId], references: [id])
+  subCategoryId Int?
+  subCategory   SubCategory?     @relation(fields: [subCategoryId], references: [id])
+  created_at    DateTime         @default(now())
+  updated_at    DateTime         @updatedAt
+  variants      ProductVariant[] @relation("ProductVariants")
+  orderItems    OrderItem[]      @relation("ProductOrderItems")
+  brand         Brand            @relation(fields: [brandId], references: [id])
+  brandId       Int
+
+  @@index([name])
+  @@map("products")
+}
+
+model Brand {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  Product    Product[]
+
+  @@index([name])
+  @@map("brands")
+}
+
+model ProductVariant {
+  id         Int                       @id @default(autoincrement())
+  productId  Int
+  product    Product                   @relation("ProductVariants", fields: [productId], references: [id])
+  stock      Int
+  price      Decimal                   @db.Decimal(10, 2)
+  attributes ProductVariantAttribute[] @relation("VariantAttributes")
+  OrderItem  OrderItem[]
+
+  @@map("product_variants")
+}
+
+model ProductVariantAttribute {
+  id               Int            @id @default(autoincrement())
+  variantId        Int
+  variant          ProductVariant @relation("VariantAttributes", fields: [variantId], references: [id])
+  attributeType    AttributeType  @relation(fields: [attributeTypeId], references: [id])
+  attributeTypeId  Int
+  attributeValue   AttributeValue @relation(fields: [attributeValueId], references: [id])
+  attributeValueId Int
+
+  @@unique([variantId, attributeTypeId, attributeValueId])
+  @@map("product_variant_attributes")
+}
+
+model AttributeType {
+  id                      Int                       @id @default(autoincrement())
+  name                    String                    @unique
+  values                  AttributeValue[]
+  Category                Category?                 @relation(fields: [categoryId], references: [id])
+  categoryId              Int?
+  SubCategory             SubCategory?              @relation(fields: [subCategoryId], references: [id])
+  subCategoryId           Int?
+  ProductVariantAttribute ProductVariantAttribute[]
+
+  @@unique([name, categoryId, subCategoryId])
+  @@map("attribute_types")
+}
+
+model AttributeValue {
+  id                      Int                       @id @default(autoincrement())
+  value                   String
+  attributeTypeId         Int
+  attributeType           AttributeType             @relation(fields: [attributeTypeId], references: [id])
+  ProductVariantAttribute ProductVariantAttribute[]
+
+  @@unique([value, attributeTypeId])
+  @@map("attribute_values")
+}
+
+model Order {
+  id          Int         @id @default(autoincrement())
+  userId      Int
+  user        User        @relation(fields: [userId], references: [id])
+  totalAmount Decimal     @db.Decimal(10, 2)
+  status      OrderStatus
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  orderItems  OrderItem[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id        Int            @id @default(autoincrement())
+  orderId   Int
+  order     Order          @relation(fields: [orderId], references: [id])
+  productId Int
+  product   Product        @relation("ProductOrderItems", fields: [productId], references: [id])
+  variantId Int
+  variant   ProductVariant @relation(fields: [variantId], references: [id])
+  quantity  Int
+  price     Decimal        @db.Decimal(10, 2)
+
+  @@map("order_items")
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
 }
