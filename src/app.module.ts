@@ -4,10 +4,10 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import configuration from 'config/configuration';
 import { validateEnv } from 'scripts/env.validation';
-import { PrismaModule } from './prisma/prisma.module';
-import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
-import { EmailModule } from './email/email.module';
+import { PrismaModule } from './modules/share/prisma/prisma.module';
+import { UserModule } from './modules/core/user/user.module';
+import { AuthModule } from 'src/modules/apps/auth/auth.module';
+import { EmailModule } from 'src/modules/share/email/email.module';
 
 @Module({
   imports: [

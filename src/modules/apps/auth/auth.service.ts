@@ -6,13 +6,13 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { UserService } from 'src/user/user.service';
+import { UserService } from 'src/modules/core/user/user.service';
 import * as speakeasy from 'speakeasy';
 import { comparePassword, hashPassword } from 'src/utils/hashing';
-import { LoginDto } from 'src/auth/dto/login.dto';
 import * as argon2 from 'argon2';
-import { EmailService } from 'src/email/email.service';
 import { Address } from 'nodemailer/lib/mailer';
+import { EmailService } from 'src/modules/share/email/email.service';
+import { LoginDto } from 'src/modules/apps/auth/dto/login.dto';
 @Injectable()
 export class AuthService {
   constructor(

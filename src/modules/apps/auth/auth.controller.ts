@@ -1,15 +1,15 @@
 import { Body, Controller, Get, Logger, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { RegisterDto } from 'src/auth/dto/register.dto';
-import { LoginDto } from 'src/auth/dto/login.dto';
-import { JwtAuthGuard } from 'src/auth/gaurds/auth.gaurd';
-import { RefreshTokenGuard } from 'src/auth/gaurds/refreshToken.gaurd';
-import { Validate2FADto } from 'src/auth/dto/validate2fa.dto';
+import { RegisterDto } from 'src/modules/apps/auth/dto/register.dto';
+import { LoginDto } from 'src/modules/apps/auth/dto/login.dto';
+import { JwtAuthGuard } from 'src/modules/apps/auth/gaurds/auth.gaurd';
 import { GetUser } from 'src/decorators/get-user.decorator';
-import { ChangePasswordDto } from 'src/auth/dto/changePassword.dto';
-import { ResetPasswordDto } from 'src/auth/dto/resetPassoword.dto';
-import { VerifyEmailDto } from 'src/auth/dto/verifyEmail.dto';
-import { SendEmailDto } from 'src/auth/dto/sendEmail.dto';
+import { RefreshTokenGuard } from 'src/modules/apps/auth/gaurds/refreshToken.gaurd';
+import { Validate2FADto } from 'src/modules/apps/auth/dto/validate2fa.dto';
+import { ResetPasswordDto } from 'src/modules/apps/auth/dto/resetPassoword.dto';
+import { ChangePasswordDto } from 'src/modules/apps/auth/dto/changePassword.dto';
+import { SendEmailDto } from 'src/modules/apps/auth/dto/sendEmail.dto';
+import { VerifyEmailDto } from 'src/modules/apps/auth/dto/verifyEmail.dto';
 
 @Controller('auth')
 export class AuthController {

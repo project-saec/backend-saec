@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { UserModule } from 'src/user/user.module';
+import { UserModule } from 'src/modules/core/user/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { JwtAccessStrategy } from 'src/auth/strategy/accessToken.strategy';
 import { JwtModule } from '@nestjs/jwt';
-import { RefreshTokenStrategy } from 'src/auth/strategy/refreshToken.strategy';
+import { RefreshTokenStrategy } from 'src/modules/apps/auth/strategy/refreshToken.strategy';
+import { JwtAccessStrategy } from 'src/modules/apps/auth/strategy/accessToken.strategy';
 
 @Module({
   imports: [

@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from 'src/modules/share/prisma/prisma.service';
 import { Prisma, User } from '@prisma/client';
 
 @Injectable()
