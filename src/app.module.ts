@@ -10,6 +10,8 @@ import { AuthModule } from 'src/modules/apps/auth/auth.module';
 import { EmailModule } from 'src/modules/share/email/email.module';
 import { CategoryModule } from './modules/apps/category/category.module';
 import { SubCategoryModule } from 'src/modules/apps/subcategory/subcategory.module';
+import { AttributeTypeModule } from 'src/modules/apps/attributeType/attribute-type.module';
+import { AttributeValueModule } from 'src/modules/apps/attributeValue/attribute-value.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { SubCategoryModule } from 'src/modules/apps/subcategory/subcategory.modu
     EmailModule,
     CategoryModule,
     SubCategoryModule,
+    AttributeTypeModule,
+    AttributeValueModule,
   ],
   controllers: [AppController],
   providers: [AppService],

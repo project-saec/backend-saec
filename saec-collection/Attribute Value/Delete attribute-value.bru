@@ -1,0 +1,15 @@
+meta {
+  name: Delete attribute-value
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{baseURL}}/attribute-value/:id
+  body: none
+  auth: none
+}
+
+params:path {
+  id: 5
+}

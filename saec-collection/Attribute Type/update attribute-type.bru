@@ -1,0 +1,21 @@
+meta {
+  name: update attribute-type
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{baseURL}}/attribute-type/:id
+  body: json
+  auth: none
+}
+
+params:path {
+  id: 1
+}
+
+body:json {
+  {
+    "name": "Texture"
+  }
+}

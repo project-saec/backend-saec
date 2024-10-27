@@ -1,0 +1,17 @@
+meta {
+  name: create attribute-type
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseURL}}/attribute-type
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Material2"
+  }
+}

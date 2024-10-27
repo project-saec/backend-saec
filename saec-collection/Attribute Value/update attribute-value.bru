@@ -1,0 +1,23 @@
+meta {
+  name: update attribute-value
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{baseURL}}/attribute-value/:id
+  body: json
+  auth: none
+}
+
+params:path {
+  id: 3
+}
+
+body:json {
+  {
+    "id": 1,
+    "value": "hello2",
+    "attributeTypeId": 3
+  }
+}
