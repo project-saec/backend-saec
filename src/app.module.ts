@@ -9,6 +9,7 @@ import { UserModule } from './modules/core/user/user.module';
 import { AuthModule } from 'src/modules/apps/auth/auth.module';
 import { EmailModule } from 'src/modules/share/email/email.module';
 import { CategoryModule } from './modules/apps/category/category.module';
+import { SubCategoryModule } from 'src/modules/apps/subcategory/subcategory.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { CategoryModule } from './modules/apps/category/category.module';
     AuthModule,
     EmailModule,
     CategoryModule,
+    SubCategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

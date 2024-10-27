@@ -1,0 +1,23 @@
+meta {
+  name: create subCategory
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseURL}}/subcategory
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "Smartphones",
+    "description": "Mobile phones and accessories",
+    "categoryId": 1,
+    "allowedAttributes": [
+      3,
+      4
+    ]
+  }
+}

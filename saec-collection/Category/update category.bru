@@ -1,0 +1,24 @@
+meta {
+  name: update category
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{baseURL}}/category/:id
+  body: json
+  auth: none
+}
+
+params:path {
+  id: 1
+}
+
+body:json {
+  {
+    "description": "Updated description for electronic devices",
+    "allowedAttributes": [
+      1,2
+    ]
+  }
+}

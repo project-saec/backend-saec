@@ -1,0 +1,22 @@
+meta {
+  name: create category
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseURL}}/category
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "Electronics2",
+    "description": "Electronic devices and accessories",
+    "allowedAttributes": [
+      1,
+      2
+    ]
+  }
+}
