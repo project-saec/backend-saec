@@ -10,6 +10,7 @@ async function main() {
       first_name: 'John',
       last_name: 'Doe',
       emailVerified: true,
+      role: 'ADMIN',
     },
   });
 

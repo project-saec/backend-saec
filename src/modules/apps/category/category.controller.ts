@@ -8,10 +8,15 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
+import { Roles } from 'src/decorators/role.decorator';
+import { JwtAuthGuard } from 'src/modules/apps/auth/gaurds/auth.gaurd';
+import { RolesGuard } from 'src/modules/apps/auth/gaurds/roles.gaurd';
 import { CategoryService } from 'src/modules/apps/category/category.service';
 import { CreateCategoryDto } from 'src/modules/apps/category/dtos/create-category.dto';
 import { UpdateCategoryDto } from 'src/modules/apps/category/dtos/update-category.dto';
+import { UserRole } from 'src/modules/core/user/role.enum';
 
 @Controller('category')
 export class CategoryController {
@@ -28,6 +33,8 @@ export class CategoryController {
     return this.categoryService.getCategoryById(+id);
   }
 
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Post()
   createCategory(@Body() createCategoryDto: CreateCategoryDto) {
     return this.categoryService.createCategory({

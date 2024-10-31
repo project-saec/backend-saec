@@ -74,7 +74,7 @@ export class AuthService {
         throw new BadRequestException('Invalid 2FA token');
       }
 
-      const tokens = await this.getTokens(user.id, user.email);
+      const tokens = await this.getTokens(user.id, user.email, user.role);
       await this.updateRefreshToken(user.id, tokens.refreshToken);
       return tokens;
     } catch (err) {
@@ -106,7 +106,7 @@ export class AuthService {
         }),
       };
     }
-    const tokens = await this.getTokens(user.id, user.email);
+    const tokens = await this.getTokens(user.id, user.email, user.role);
     await this.updateRefreshToken(user.id, tokens.refreshToken);
 
     return {
@@ -132,7 +132,7 @@ export class AuthService {
       refreshToken,
     );
     if (!refreshTokenMatches) throw new ForbiddenException('Access Denied');
-    const tokens = await this.getTokens(user.id, user.email);
+    const tokens = await this.getTokens(user.id, user.email, user.role);
     await this.updateRefreshToken(user.id, tokens.refreshToken);
     return tokens;
   }
@@ -167,7 +167,6 @@ export class AuthService {
   ) {
     const user = await this.userService.findById(userId);
     if (!user) throw new NotFoundException('User not found');
-    console.log(user.password, oldPassword);
 
     const passwordValid = await comparePassword(user.password, oldPassword);
     if (!passwordValid)
@@ -239,12 +238,13 @@ export class AuthService {
     return this.mailService.sendChangePasswordEmail(emailAddressObject);
   }
 
-  private async getTokens(userId: number, email: string) {
+  private async getTokens(userId: number, email: string, role: string) {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(
         {
           sub: userId,
           email,
+          role,
         },
         {
           secret: this.configService.get<string>('jwtAccessSecret'),

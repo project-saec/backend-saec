@@ -7,6 +7,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  ADMIN
+  USER
+}
+
 model User {
   id            Int      @id @default(autoincrement())
   email         String   @unique
@@ -17,6 +22,7 @@ model User {
   enable2FA     Boolean  @default(false)
   refreshToken  String?
   emailVerified Boolean  @default(false)
+  role          UserRole @default(USER)
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
   orders        Order[]
