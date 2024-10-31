@@ -91,7 +91,6 @@ export class CategoryService {
         );
       }
     }
-    console.log(data.allowedAttributes);
 
     const validAttributes = await this.validateAttributeTypes(
       Array.isArray(data.allowedAttributes?.connect)
