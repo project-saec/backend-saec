@@ -7,10 +7,15 @@ import {
   Param,
   ParseIntPipe,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
 import { SubCategoryService } from './subcategory.service';
 import { CreateSubCategoryDto } from './dtos/create-subcategory.dto';
 import { UpdateSubCategoryDto } from './dtos/update-subcategory.dto';
+import { Roles } from 'src/decorators/role.decorator';
+import { UserRole } from 'src/modules/core/user/role.enum';
+import { JwtAuthGuard } from 'src/modules/apps/auth/gaurds/auth.gaurd';
+import { RolesGuard } from 'src/modules/apps/auth/gaurds/roles.gaurd';
 
 @Controller('subcategory')
 export class SubCategoryController {
@@ -26,6 +31,8 @@ export class SubCategoryController {
     return this.subCategoryService.getSubCategoryById(id);
   }
 
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Post()
   createSubCategory(@Body() createSubCategoryDto: CreateSubCategoryDto) {
     return this.subCategoryService.createSubCategory({
@@ -44,6 +51,8 @@ export class SubCategoryController {
     });
   }
 
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Patch(':id')
   updateSubCategory(
     @Param('id', ParseIntPipe) id: number,
@@ -65,6 +74,8 @@ export class SubCategoryController {
     });
   }
 
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Delete(':id')
   deleteSubCategory(@Param('id', ParseIntPipe) id: number) {
     return this.subCategoryService.deleteSubCategory(id);

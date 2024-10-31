@@ -48,6 +48,8 @@ export class CategoryController {
     });
   }
 
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Patch(':id')
   updateCategory(
     @Param('id', ParseIntPipe) id: number,
@@ -64,6 +66,8 @@ export class CategoryController {
     });
   }
 
+  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Delete(':id')
   deleteCategory(@Param('id', ParseIntPipe) id: number) {
     return this.categoryService.deleteCategory(id);
