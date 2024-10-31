@@ -12,6 +12,6 @@ async function bootstrap() {
     }),
   );
   const configService = app.get(ConfigService);
-  await app.listen(configService.get<number>('appPort'));
+  await app.listen(configService.get<number>('appPort') || 3000);
 }
 bootstrap();

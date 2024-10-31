@@ -51,7 +51,7 @@ export class CategoryController {
       description: updateCategoryDto.description,
       allowedAttributes: updateCategoryDto.allowedAttributes
         ? {
-            set: updateCategoryDto.allowedAttributes.map((id) => ({ id })),
+            connect: updateCategoryDto.allowedAttributes.map((id) => ({ id })),
           }
         : undefined,
     });

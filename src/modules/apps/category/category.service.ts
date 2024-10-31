@@ -1,20 +1,26 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { AttributeTypeService } from 'src/modules/apps/attributeType/attribute-type.service';
 import { PrismaService } from 'src/modules/share/prisma/prisma.service';
 
 @Injectable()
 export class CategoryService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private attributeTypeService: AttributeTypeService,
+  ) {}
 
   async getAllCategories() {
     return this.prisma.category.findMany({
       include: {
         SubCategories: true,
+        allowedAttributes: true,
       },
     });
   }
@@ -85,11 +91,25 @@ export class CategoryService {
         );
       }
     }
+    console.log(data.allowedAttributes);
+
+    const validAttributes = await this.validateAttributeTypes(
+      Array.isArray(data.allowedAttributes?.connect)
+        ? data.allowedAttributes.connect
+            .map((attr) => attr.id)
+            .filter((id): id is number => id !== undefined)
+        : [],
+    );
 
     try {
       return await this.prisma.category.update({
         where: { id },
-        data,
+        data: {
+          ...data,
+          allowedAttributes: {
+            set: validAttributes.map((attr) => ({ id: attr.id })),
+          },
+        },
         include: {
           SubCategories: true,
           allowedAttributes: true,
@@ -120,5 +140,24 @@ export class CategoryService {
     });
 
     return `category with id ${deletedCategory.id} deleted`;
+  }
+
+  private async validateAttributeTypes(attributeTypeIds: number[]) {
+    if (!attributeTypeIds || attributeTypeIds.length === 0) {
+      throw new BadRequestException('No attribute types provided.');
+    }
+
+    const attributes = await Promise.all(
+      attributeTypeIds.map(async (id) => {
+        const attribute =
+          await this.attributeTypeService.getAttributeTypeById(id);
+        if (!attribute) {
+          throw new NotFoundException(`AttributeType with ID ${id} not found.`);
+        }
+        return attribute;
+      }),
+    );
+
+    return attributes;
   }
 }
